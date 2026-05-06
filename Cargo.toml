@@ -1,0 +1,32 @@
+[package]
+name = "gambit_demo"
+version = "0.1.0"
+edition = "2021"
+description = "palantir demo for build-to-apply"
+authors = ["Aaron Berkhof"]
+# Keep in sync with msrv in .clippy.toml
+rust-version = "1.75.0"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/Aaron Berkhof/gambit_demo"
+
+[lib]
+name = "gambit_demo"
+# cdylib: Python extension module (.so / .pyd) built by maturin
+# rlib: Rust library target so `cargo test` can link against the crate
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+pyo3 = { version = "0.22", features = ["extension-module"] }
+pyo3-stub-gen = "0.6"
+
+[dev-dependencies]
+# Better assertion output: shows left/right values on failure.
+pretty_assertions = "1"
+# Captures tracing spans/events in tests without a global subscriber.
+tracing-test = "0.2"
+# Benchmarking framework — run with `cargo bench`, reports in target/criterion/.
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[bench]]
+name = "benchmarks"
+harness = false
